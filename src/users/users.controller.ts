@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Redirect } from '@ne
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { SkipAuthGuard } from '../public/public.decorator'; // Import the Public decorator
 
 @Controller('users')
 export class UsersController {
@@ -11,7 +12,8 @@ export class UsersController {
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
-
+  
+  @SkipAuthGuard() // This route will be public and won't require authentication
   @Get('all')
   findAll() {
     return this.usersService.findAll();
@@ -25,7 +27,7 @@ export class UsersController {
   // THESE 2 METHODS, ABOVE ONE AND UNDERNEATH ONE, have conflicts because youtube endpoint is interpreted as get and expects a parameter, putting this first helps solve this problem
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    return this.usersService.findOneById(+id);
   }
 
   @Patch(':id')

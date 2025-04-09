@@ -7,6 +7,7 @@ import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/entities/role.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -22,7 +23,7 @@ import { AppService } from './app.service';
     retryDelay: 5000,
     autoLoadEntities: true // With that option specified, every entity registered through the forFeature() method will be automatically added to the entities array of the configuration object.
   }),
-    RolesModule, UsersModule],
+    RolesModule, UsersModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -34,11 +34,19 @@ export class UsersService {
     return `This action updates a #${id} user`;
   }
 
-  findOne(id: number): Promise<User | null> {
-    return this.usersRepository.findOneBy({ id });
+  findOneById(userId: number): Promise<User | null> {
+    return this.usersRepository.findOneBy({ id: userId });
+  }
+
+  findOneByEmail(email: string): Promise<User | null> {
+    return this.usersRepository.findOne({ where: { email } });
   }
 
   async remove(id: number): Promise<void> {
     await this.usersRepository.delete(id);
+  }
+
+  userExists(email: string): Promise<boolean> {
+    return this.usersRepository.exists({ where: { email } });
   }
 }
